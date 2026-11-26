@@ -1,27 +1,38 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
-import { err, map, match, ok, pipe } from "tirjs";
+import {
+  columnSum,
+  letters,
+  map,
+  ok,
+  permute,
+  pipe,
+  reduce,
+  value,
+  valueAll,
+} from "tirjs";
 
-test("plain ESM JavaScript can call tirjs", () => {
+test("plain ESM JavaScript can evaluate TirN", () => {
+  assert.deepEqual(letters("Հուր", { alphabet: "G" }), {
+    value: ["Հ", "Ո", "Ւ", "Ր"],
+    undefinedBy: [],
+  });
+  assert.equal(value("Հայկ", { alphabet: "G" }).value, 431);
+  assert.equal(reduce(431), 8);
+  assert.equal(permute("Հայկ", "atbash", { alphabet: "G" }).value, "ՅՔՀՆ");
+  assert.equal(columnSum("ՅՔՀՆ", { alphabet: "G" }).value, 23);
+  assert.deepEqual(valueAll("Հուր", { alphabet: "A" }).strict, {
+    value: null,
+    undefinedBy: ["Ու"],
+  });
+});
+
+test("plain ESM JavaScript can call pipe", () => {
   const result = pipe(
     ok(20),
     (current) => map(current, (n) => n + 1),
     (current) => map(current, (n) => n * 2),
   );
 
-  assert.deepEqual(
-    match(result, {
-      ok: (value) => ({ status: "ok", value }),
-      err: (error) => ({ status: "err", error }),
-    }),
-    { status: "ok", value: 42 },
-  );
-
-  assert.equal(
-    match(err("missing"), {
-      ok: (value) => value,
-      err: (error) => error,
-    }),
-    "missing",
-  );
+  assert.deepEqual(result, ok(42));
 });

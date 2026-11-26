@@ -1,4 +1,18 @@
-export { pipe } from "./pipe.js";
+export { acronym } from "./acronym.js";
+export type { Alphabet, Defined, NumericMode } from "./alphabet.js";
+export { columnSum, columnSumAll } from "./column.js";
+export { derive } from "./derive.js";
+export type { DerivationStep } from "./derive.js";
+export { expand } from "./expand.js";
+export type { Lexicon } from "./expand.js";
+export { letters } from "./letters.js";
+export { permute } from "./permute.js";
+export type { Cipher } from "./permute.js";
+export { reduce } from "./reduce.js";
+export { isAnagram, sameColumnSum, sameSerial, sameValue } from "./relation.js";
+export { serial } from "./serial.js";
+export { value, valueAll } from "./value.js";
+export { pipe } from "./utils/fp/pipe.js";
 export {
   err,
   flatMap,
@@ -9,5 +23,5 @@ export {
   match,
   ok,
   unwrapOr,
-} from "./result.js";
-export type { Err, Ok, Result } from "./result.js";
+} from "./utils/fp/result.js";
+export type { Err, Ok, Result } from "./utils/fp/result.js";

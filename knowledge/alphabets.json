@@ -1,0 +1,571 @@
+{
+  "grabar": [
+    {
+      "letter": "Ա",
+      "position": 1,
+      "numeric": 1,
+      "column": 1,
+      "modes": null
+    },
+    {
+      "letter": "Բ",
+      "position": 2,
+      "numeric": 2,
+      "column": 2,
+      "modes": null
+    },
+    {
+      "letter": "Գ",
+      "position": 3,
+      "numeric": 3,
+      "column": 3,
+      "modes": null
+    },
+    {
+      "letter": "Դ",
+      "position": 4,
+      "numeric": 4,
+      "column": 4,
+      "modes": null
+    },
+    {
+      "letter": "Ե",
+      "position": 5,
+      "numeric": 5,
+      "column": 5,
+      "modes": null
+    },
+    {
+      "letter": "Զ",
+      "position": 6,
+      "numeric": 6,
+      "column": 6,
+      "modes": null
+    },
+    {
+      "letter": "Է",
+      "position": 7,
+      "numeric": 7,
+      "column": 7,
+      "modes": null
+    },
+    {
+      "letter": "Ը",
+      "position": 8,
+      "numeric": 8,
+      "column": 8,
+      "modes": null
+    },
+    {
+      "letter": "Թ",
+      "position": 9,
+      "numeric": 9,
+      "column": 9,
+      "modes": null
+    },
+    {
+      "letter": "Ժ",
+      "position": 10,
+      "numeric": 10,
+      "column": 1,
+      "modes": null
+    },
+    {
+      "letter": "Ի",
+      "position": 11,
+      "numeric": 20,
+      "column": 2,
+      "modes": null
+    },
+    {
+      "letter": "Լ",
+      "position": 12,
+      "numeric": 30,
+      "column": 3,
+      "modes": null
+    },
+    {
+      "letter": "Խ",
+      "position": 13,
+      "numeric": 40,
+      "column": 4,
+      "modes": null
+    },
+    {
+      "letter": "Ծ",
+      "position": 14,
+      "numeric": 50,
+      "column": 5,
+      "modes": null
+    },
+    {
+      "letter": "Կ",
+      "position": 15,
+      "numeric": 60,
+      "column": 6,
+      "modes": null
+    },
+    {
+      "letter": "Հ",
+      "position": 16,
+      "numeric": 70,
+      "column": 7,
+      "modes": null
+    },
+    {
+      "letter": "Ձ",
+      "position": 17,
+      "numeric": 80,
+      "column": 8,
+      "modes": null
+    },
+    {
+      "letter": "Ղ",
+      "position": 18,
+      "numeric": 90,
+      "column": 9,
+      "modes": null
+    },
+    {
+      "letter": "Ճ",
+      "position": 19,
+      "numeric": 100,
+      "column": 1,
+      "modes": null
+    },
+    {
+      "letter": "Մ",
+      "position": 20,
+      "numeric": 200,
+      "column": 2,
+      "modes": null
+    },
+    {
+      "letter": "Յ",
+      "position": 21,
+      "numeric": 300,
+      "column": 3,
+      "modes": null
+    },
+    {
+      "letter": "Ն",
+      "position": 22,
+      "numeric": 400,
+      "column": 4,
+      "modes": null
+    },
+    {
+      "letter": "Շ",
+      "position": 23,
+      "numeric": 500,
+      "column": 5,
+      "modes": null
+    },
+    {
+      "letter": "Ո",
+      "position": 24,
+      "numeric": 600,
+      "column": 6,
+      "modes": null
+    },
+    {
+      "letter": "Չ",
+      "position": 25,
+      "numeric": 700,
+      "column": 7,
+      "modes": null
+    },
+    {
+      "letter": "Պ",
+      "position": 26,
+      "numeric": 800,
+      "column": 8,
+      "modes": null
+    },
+    {
+      "letter": "Ջ",
+      "position": 27,
+      "numeric": 900,
+      "column": 9,
+      "modes": null
+    },
+    {
+      "letter": "Ռ",
+      "position": 28,
+      "numeric": 1000,
+      "column": 1,
+      "modes": null
+    },
+    {
+      "letter": "Ս",
+      "position": 29,
+      "numeric": 2000,
+      "column": 2,
+      "modes": null
+    },
+    {
+      "letter": "Վ",
+      "position": 30,
+      "numeric": 3000,
+      "column": 3,
+      "modes": null
+    },
+    {
+      "letter": "Տ",
+      "position": 31,
+      "numeric": 4000,
+      "column": 4,
+      "modes": null
+    },
+    {
+      "letter": "Ր",
+      "position": 32,
+      "numeric": 5000,
+      "column": 5,
+      "modes": null
+    },
+    {
+      "letter": "Ց",
+      "position": 33,
+      "numeric": 6000,
+      "column": 6,
+      "modes": null
+    },
+    {
+      "letter": "Ւ",
+      "position": 34,
+      "numeric": 7000,
+      "column": 7,
+      "modes": null
+    },
+    {
+      "letter": "Փ",
+      "position": 35,
+      "numeric": 8000,
+      "column": 8,
+      "modes": null
+    },
+    {
+      "letter": "Ք",
+      "position": 36,
+      "numeric": 9000,
+      "column": 9,
+      "modes": null
+    }
+  ],
+  "ashkharabar": [
+    {
+      "letter": "Ա",
+      "position": 1,
+      "numeric": 1,
+      "column": 1,
+      "modes": null
+    },
+    {
+      "letter": "Բ",
+      "position": 2,
+      "numeric": 2,
+      "column": 2,
+      "modes": null
+    },
+    {
+      "letter": "Գ",
+      "position": 3,
+      "numeric": 3,
+      "column": 3,
+      "modes": null
+    },
+    {
+      "letter": "Դ",
+      "position": 4,
+      "numeric": 4,
+      "column": 4,
+      "modes": null
+    },
+    {
+      "letter": "Ե",
+      "position": 5,
+      "numeric": 5,
+      "column": 5,
+      "modes": null
+    },
+    {
+      "letter": "Զ",
+      "position": 6,
+      "numeric": 6,
+      "column": 6,
+      "modes": null
+    },
+    {
+      "letter": "Է",
+      "position": 7,
+      "numeric": 7,
+      "column": 7,
+      "modes": null
+    },
+    {
+      "letter": "Ը",
+      "position": 8,
+      "numeric": 8,
+      "column": 8,
+      "modes": null
+    },
+    {
+      "letter": "Թ",
+      "position": 9,
+      "numeric": 9,
+      "column": 9,
+      "modes": null
+    },
+    {
+      "letter": "Ժ",
+      "position": 10,
+      "numeric": 10,
+      "column": 1,
+      "modes": null
+    },
+    {
+      "letter": "Ի",
+      "position": 11,
+      "numeric": 20,
+      "column": 2,
+      "modes": null
+    },
+    {
+      "letter": "Լ",
+      "position": 12,
+      "numeric": 30,
+      "column": 3,
+      "modes": null
+    },
+    {
+      "letter": "Խ",
+      "position": 13,
+      "numeric": 40,
+      "column": 4,
+      "modes": null
+    },
+    {
+      "letter": "Ծ",
+      "position": 14,
+      "numeric": 50,
+      "column": 5,
+      "modes": null
+    },
+    {
+      "letter": "Կ",
+      "position": 15,
+      "numeric": 60,
+      "column": 6,
+      "modes": null
+    },
+    {
+      "letter": "Հ",
+      "position": 16,
+      "numeric": 70,
+      "column": 7,
+      "modes": null
+    },
+    {
+      "letter": "Ձ",
+      "position": 17,
+      "numeric": 80,
+      "column": 8,
+      "modes": null
+    },
+    {
+      "letter": "Ղ",
+      "position": 18,
+      "numeric": 90,
+      "column": 9,
+      "modes": null
+    },
+    {
+      "letter": "Ճ",
+      "position": 19,
+      "numeric": 100,
+      "column": 1,
+      "modes": null
+    },
+    {
+      "letter": "Մ",
+      "position": 20,
+      "numeric": 200,
+      "column": 2,
+      "modes": null
+    },
+    {
+      "letter": "Յ",
+      "position": 21,
+      "numeric": 300,
+      "column": 3,
+      "modes": null
+    },
+    {
+      "letter": "Ն",
+      "position": 22,
+      "numeric": 400,
+      "column": 4,
+      "modes": null
+    },
+    {
+      "letter": "Շ",
+      "position": 23,
+      "numeric": 500,
+      "column": 5,
+      "modes": null
+    },
+    {
+      "letter": "Ո",
+      "position": 24,
+      "numeric": 600,
+      "column": 6,
+      "modes": null
+    },
+    {
+      "letter": "Չ",
+      "position": 25,
+      "numeric": 700,
+      "column": 7,
+      "modes": null
+    },
+    {
+      "letter": "Պ",
+      "position": 26,
+      "numeric": 800,
+      "column": 8,
+      "modes": null
+    },
+    {
+      "letter": "Ջ",
+      "position": 27,
+      "numeric": 900,
+      "column": 9,
+      "modes": null
+    },
+    {
+      "letter": "Ռ",
+      "position": 28,
+      "numeric": 1000,
+      "column": 1,
+      "modes": null
+    },
+    {
+      "letter": "Ս",
+      "position": 29,
+      "numeric": 2000,
+      "column": 2,
+      "modes": null
+    },
+    {
+      "letter": "Վ",
+      "position": 30,
+      "numeric": 3000,
+      "column": 3,
+      "modes": null
+    },
+    {
+      "letter": "Տ",
+      "position": 31,
+      "numeric": 4000,
+      "column": 4,
+      "modes": null
+    },
+    {
+      "letter": "Ր",
+      "position": 32,
+      "numeric": 5000,
+      "column": 5,
+      "modes": null
+    },
+    {
+      "letter": "Ց",
+      "position": 33,
+      "numeric": 6000,
+      "column": 6,
+      "modes": null
+    },
+    {
+      "letter": "Ու",
+      "position": 34,
+      "numeric": null,
+      "column": null,
+      "modes": {
+        "decompose": {
+          "numeric": 7600,
+          "column": 13
+        },
+        "inherit": {
+          "numeric": 7000,
+          "column": 7
+        },
+        "strict": null
+      }
+    },
+    {
+      "letter": "Փ",
+      "position": 35,
+      "numeric": 8000,
+      "column": 8,
+      "modes": null
+    },
+    {
+      "letter": "Ք",
+      "position": 36,
+      "numeric": 9000,
+      "column": 9,
+      "modes": null
+    },
+    {
+      "letter": "և",
+      "position": 37,
+      "numeric": null,
+      "column": null,
+      "modes": {
+        "decompose": {
+          "numeric": 7005,
+          "column": 12
+        },
+        "inherit": {
+          "numeric": 0,
+          "column": 0
+        },
+        "strict": null
+      }
+    },
+    {
+      "letter": "Օ",
+      "position": 38,
+      "numeric": null,
+      "column": null,
+      "modes": {
+        "decompose": {
+          "numeric": 0,
+          "column": 0
+        },
+        "inherit": {
+          "numeric": 0,
+          "column": 0
+        },
+        "strict": null
+      }
+    },
+    {
+      "letter": "Ֆ",
+      "position": 39,
+      "numeric": null,
+      "column": null,
+      "modes": {
+        "decompose": {
+          "numeric": 0,
+          "column": 0
+        },
+        "inherit": {
+          "numeric": 0,
+          "column": 0
+        },
+        "strict": null
+      }
+    }
+  ]
+}
