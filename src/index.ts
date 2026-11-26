@@ -1,5 +1,5 @@
 export { acronym } from "./acronyms/acronym.js";
-export type { Alphabet, Defined, NumericMode } from "./alphabet.js";
+export type { Alphabet, Defined, NumericMode, Spelling } from "./alphabet.js";
 export { columnSum, columnSumAll } from "./column.js";
 export { derive } from "./derive.js";
 export type { DerivationStep } from "./derive.js";

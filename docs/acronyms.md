@@ -10,12 +10,12 @@ import { acronym, expand } from "tirjs";
 
 ```typescript
 acronym(
-  text: string,
+  text: string | Spelling,
   options: { alphabet: "G" | "A" },
 ): { readonly value: string | null; readonly undefinedBy: readonly string[] }
 ```
 
-`↑⟨phrase⟩`. The first letter follows tokenization. In Ashkharabar, `Ու` and `և` are one letter, so `Ուրախ` contributes `Ու` and `Եվրոպա` contributes `և`. In Grabar, `Ուրախ` begins with `Ո`. A run of spaces is one word boundary.
+`↑⟨phrase⟩`. The first letter follows tokenization. In Ashkharabar, `Ու` and `և` are one letter, so `Ուրախ` contributes `Ու` and `Եվրոպա` contributes `և`. In Grabar, `Ուրախ` begins with `Ո`. A run of spaces is one word boundary. A `Spelling` from [`permute`](ciphers.md) uses the first letter of each word in `letters`.
 
 If any letter in the text is outside the alphabet, the acronym is undefined. That includes a letter that would not have been chosen as a first letter.
 
@@ -49,7 +49,7 @@ acronym("Ուրախ օր", { alphabet: "G" });
 
 ```typescript
 expand(
-  word: string,
+  word: string | Spelling,
   lexicon: { readonly name: string; readonly phrases: readonly string[] },
   options: { alphabet: "G" | "A" },
 ): { readonly value: readonly string[] | null; readonly undefinedBy: readonly string[] }

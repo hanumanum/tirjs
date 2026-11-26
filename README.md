@@ -54,11 +54,11 @@ import { acronym, expand, isAnagram, permute } from "tirjs";
 
 // σ:atbash ⟨Հայկ⟩ᴳ = ⟨ՅՔՀՆ⟩ᴳ
 permute("Հայկ", "atbash", { alphabet: "G" });
-// { value: "ՅՔՀՆ", undefinedBy: [] }
+// { value: "ՅՔՀՆ", letters: [["Յ", "Ք", "Հ", "Ն"]], undefinedBy: [] }
 
 // σ:+1 ⟨Ա⟩ᴳ = ⟨Բ⟩ᴳ
 permute("Ա", { shift: 1 }, { alphabet: "G" });
-// { value: "Բ", undefinedBy: [] }
+// { value: "Բ", letters: [["Բ"]], undefinedBy: [] }
 
 // ↑⟨Ուրախ օր⟩ᴬ = ⟨ՈւՕ⟩ᴬ
 acronym("Ուրախ օր", { alphabet: "A" });
@@ -75,7 +75,7 @@ isAnagram("եւ", "եվ", { alphabet: "A" });
 // { value: true, undefinedBy: [] }
 ```
 
-`permute` also takes `"albam.pivot"` and `"albam.shift"`. On Grabar, `"albam"` is the same half-swap. Ashkharabar albam takes one of the two variants. `expand` searches a lexicon the caller supplies. tirjs ships none.
+`permute` also takes `"albam.pivot"` and `"albam.shift"`. On Grabar, `"albam"` is the same half-swap. Ashkharabar albam takes one of the two variants. The result includes `letters`, the words after the permutation. Pass that result to the next call so those letters are kept. Passing `.value` tokenizes the string again. `expand` searches a lexicon the caller supplies. tirjs ships none.
 
 `sameValue`, `sameColumnSum`, and `sameSerial` compare two texts under one alphabet: `≡#`, `≡#ₖ`, and `≡№`.
 

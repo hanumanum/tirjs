@@ -3,7 +3,7 @@
 `permute` applies one alphabet permutation, letter by letter. Shared rules for alphabets, case, and `⊥` are in the [function reference](api.md). The notation is [TirN](TIRN.md) §4.
 
 ```javascript
-import { columnSum, permute, reduce, value } from "tirjs";
+import { columnSum, permute, reduce, serial, value } from "tirjs";
 ```
 
 ```typescript
@@ -14,14 +14,22 @@ type Cipher =
   | "albam.shift"
   | { readonly shift: number };
 
+type Spelling = {
+  readonly value: string | null;
+  readonly letters: readonly (readonly string[])[] | null;
+  readonly undefinedBy: readonly string[];
+};
+
 permute(
-  text: string,
+  text: string | Spelling,
   cipher: Cipher,
   options: { alphabet: "G" | "A" },
-): { readonly value: string | null; readonly undefinedBy: readonly string[] }
+): Spelling
 ```
 
-Words stay separate and come back in canonical spelling. A shift of zero still rewrites `Հայկ` as `ՀԱՅԿ`. A text that does not tokenize returns `{ value: null, undefinedBy }`.
+Words stay separate and come back in canonical spelling. `letters` is one array per word. `value` writes those letters with one space between words. A shift of zero still rewrites `Հայկ` as `ՀԱՅԿ`. A text that does not tokenize returns `{ value: null, letters: null, undefinedBy }`.
+
+Pass the whole result to the next call: `value`, `serial`, `columnSum`, another `permute`, or a relation. That call reads `letters`. Passing `result.value` tokenizes the string, and Ashkharabar then reads `ԵՎ` as the one letter `և`.
 
 | Cipher | TirN | Rule |
 |---|---|---|
@@ -37,11 +45,11 @@ A non-integer `shift` throws `shift expects an integer`. An unknown cipher name 
 ```javascript
 // σ:atbash ⟨Հայկ⟩ᴳ = ⟨ՅՔՀՆ⟩ᴳ
 permute("Հայկ", "atbash", { alphabet: "G" });
-// { value: "ՅՔՀՆ", undefinedBy: [] }
+// { value: "ՅՔՀՆ", letters: [["Յ", "Ք", "Հ", "Ն"]], undefinedBy: [] }
 
 // σ:atbash ⟨հայկ⟩ᴬ = ⟨ՈՖՃՉ⟩ᴬ
 permute("հայկ", "atbash", { alphabet: "A" });
-// { value: "ՈՖՃՉ", undefinedBy: [] }
+// { value: "ՈՖՃՉ", letters: [["Ո", "Ֆ", "Ճ", "Չ"]], undefinedBy: [] }
 
 // σ:atbash ⟨Հուր⟩ᴳ = ⟨ՅԽԳԵ⟩ᴳ
 permute("Հուր", "atbash", { alphabet: "G" }).value;
@@ -89,7 +97,7 @@ permute("Մ", "albam.shift", { alphabet: "A" }).value;
 
 // σ:atbash ⟨Օ⟩ᴳ = ⊥(Օ)
 permute("Օ", "atbash", { alphabet: "G" });
-// { value: null, undefinedBy: ["Օ"] }
+// { value: null, letters: null, undefinedBy: ["Օ"] }
 ```
 
 Atbash of atbash, Grabar albam of Grabar albam, and Ashkharabar `albam.pivot` of itself each return the canonical original. `albam.shift` on Ashkharabar does not: `Ա` goes to `Մ`, and `Մ` goes on to `Ֆ`.
@@ -99,7 +107,7 @@ A cipher changes the letters. The number of the new word is a separate call:
 ```javascript
 // #₁ σ:atbash ⟨Հայկ⟩ᴳ = 5
 // #ₖ σ:atbash ⟨Հայկ⟩ᴳ = 23
-const image = permute("Հայկ", "atbash", { alphabet: "G" }).value;
+const image = permute("Հայկ", "atbash", { alphabet: "G" });
 value(image, { alphabet: "G" }).value;       // 9770
 reduce(9770);                                 // 5
 columnSum(image, { alphabet: "G" }).value;   // 23
@@ -204,6 +212,26 @@ permute(permute("Ա", "albam.shift", { alphabet: "A" }).value, "albam.shift", { 
 // "Ֆ"
 
 // σ:atbash σ:atbash ⟨հայկ⟩ᴳ = ⟨ՀԱՅԿ⟩ᴳ
-permute(permute("հայկ", "atbash", { alphabet: "G" }).value, "atbash", { alphabet: "G" }).value;
+permute(permute("հայկ", "atbash", { alphabet: "G" }), "atbash", { alphabet: "G" }).value;
 // "ՀԱՅԿ"
+```
+
+Atbash of `ՓԺ` in Ashkharabar is the two letters `Ե` and `Վ`. The string `ԵՎ` would be read back as `և`. The letter list keeps them apart, so the serial is `5+30` and atbash applied to that result returns `ՓԺ`.
+
+```javascript
+// σ:atbash ⟨ՓԺ⟩ᴬ = ⟨ԵՎ⟩ᴬ    letters Ե·Վ
+const split = permute("ՓԺ", "atbash", { alphabet: "A" });
+// { value: "ԵՎ", letters: [["Ե", "Վ"]], undefinedBy: [] }
+
+// №⟨Ե·Վ⟩ᴬ = 5+30 = 35
+serial(split, { alphabet: "A" }).value;
+// 35
+
+// #⟨Ե·Վ⟩ᴬ = 5+3000 = 3005
+value(split, { alphabet: "A" }).value;
+// 3005
+
+// σ:atbash ⟨Ե·Վ⟩ᴬ = ⟨ՓԺ⟩ᴬ
+permute(split, "atbash", { alphabet: "A" }).value;
+// "ՓԺ"
 ```

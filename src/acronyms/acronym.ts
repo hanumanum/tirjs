@@ -1,8 +1,8 @@
-import { type Defined, type TextOptions } from "../alphabet.js";
-import { tokenize } from "../letters.js";
+import { type Defined, type TextInput, type TextOptions } from "../alphabet.js";
+import { read } from "../letters.js";
 
-export const acronym = (text: string, options: TextOptions): Defined<string> => {
-  const tokenized = tokenize(text, options.alphabet);
+export const acronym = (text: TextInput, options: TextOptions): Defined<string> => {
+  const tokenized = read(text, options.alphabet);
   if (tokenized.value === null) {
     return { value: null, undefinedBy: tokenized.undefinedBy };
   }

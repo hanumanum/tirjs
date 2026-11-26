@@ -44,6 +44,8 @@ type Defined<T> = {
 
 `value === null` means undefined. `undefinedBy` lists the responsible letters once each, in the order they first appear. `0`, `""`, and `[]` are defined results, and their `undefinedBy` is `[]`.
 
+A cipher result is a `Spelling`: `value` is the letters written out, and `letters` is those same letters already split into words. Pass a string or that `Spelling` to `letters`, `value`, `valueAll`, `columnSum`, `columnSumAll`, `serial`, `acronym`, `expand`, `permute`, or a relation. A string is tokenized. A `Spelling` is read from `letters`, so `Ե` followed by `Վ` stays two letters. Passing `spelling.value` tokenizes the string instead.
+
 A letter outside the alphabet fails at tokenization, before any numeric mode is applied. `Օ` in Grabar is undefined in every mode. `Ու` in Ashkharabar tokenizes, and only strict mode then makes its number undefined.
 
 **Numeric mode.** `Ու`, `և`, `Օ`, and `Ֆ` have no single classic number. `value`, `columnSum`, `sameValue`, and `sameColumnSum` require `mode` when an Ashkharabar text contains one of them. The missing mode throws `Ashkharabar letters Ու, և, Օ, and Ֆ need a numeric mode`. Grabar has none of these letters, so a mode passed there does not change the result. An Ashkharabar text that avoids those letters does not need a mode either.
@@ -63,7 +65,7 @@ Decompose rebuilds `Ու` as `Ո+Ւ` and `և` as `Ե+Ւ`. Inherit reads `Ու` a
 | `letters("", { alphabet })` | `{ value: [], undefinedBy: [] }` |
 | `value`, `columnSum`, `serial` | `{ value: 0, undefinedBy: [] }` |
 | `acronym` | `{ value: "", undefinedBy: [] }` |
-| `permute` | `{ value: "", undefinedBy: [] }` |
+| `permute` | `{ value: "", letters: [], undefinedBy: [] }` |
 
 ## Types
 
@@ -74,6 +76,12 @@ type NumericMode = "decompose" | "inherit" | "strict";
 
 type Defined<T> = {
   readonly value: T | null;
+  readonly undefinedBy: readonly string[];
+};
+
+type Spelling = {
+  readonly value: string | null;
+  readonly letters: readonly (readonly string[])[] | null;
   readonly undefinedBy: readonly string[];
 };
 
@@ -95,7 +103,7 @@ type Lexicon = {
 ## `letters`
 
 ```typescript
-letters(text: string, options: { alphabet: Alphabet }): Defined<readonly string[]>
+letters(text: string | Spelling, options: { alphabet: Alphabet }): Defined<readonly string[]>
 ```
 
 Splits text into canonical letters. The array is flat: spaces are boundaries, and the letters of every word are concatenated. The TirN line is `⟨text⟩` with the alphabet mark. Word boundaries stay available to [`acronym`](acronyms.md#acronym), [`expand`](acronyms.md#expand), and [`permute`](ciphers.md).
@@ -165,7 +173,7 @@ letters("Ֆօ", { alphabet: "G" });
 
 ```typescript
 value(
-  text: string,
+  text: string | Spelling,
   options: { alphabet: Alphabet; mode?: NumericMode },
 ): Defined<number>
 ```
@@ -242,7 +250,7 @@ A tokenization failure is returned as-is. `#⟨Օ⟩ᴳ = ⊥(Օ)`, and `value("
 
 ```typescript
 valueAll(
-  text: string,
+  text: string | Spelling,
   options: { alphabet: Alphabet },
 ): {
   decompose: Defined<number>;
@@ -277,7 +285,7 @@ When tokenization fails, every mode carries that same `undefinedBy`.
 
 ```typescript
 columnSum(
-  text: string,
+  text: string | Spelling,
   options: { alphabet: Alphabet; mode?: NumericMode },
 ): Defined<number>
 ```
@@ -332,7 +340,7 @@ For `Հայկ`, `reduce(value(...).value)` and `reduce(columnSum(...).value)` ar
 
 ```typescript
 columnSumAll(
-  text: string,
+  text: string | Spelling,
   options: { alphabet: Alphabet },
 ): {
   decompose: Defined<number>;
@@ -356,7 +364,7 @@ columnSumAll("Հուր", { alphabet: "A" });
 ## `serial`
 
 ```typescript
-serial(text: string, options: { alphabet: Alphabet }): Defined<number>
+serial(text: string | Spelling, options: { alphabet: Alphabet }): Defined<number>
 ```
 
 Sums each letter's position in the chosen alphabet. Positions are 1-based. There is no mode and no column: `Ու` is position 34, `և` is 37, `Օ` is 38, and `Ֆ` is 39, whenever they are letters of that alphabet.
@@ -488,7 +496,7 @@ type DerivationStep =
 | `column` | a word line | `#ₖ` of that word. `mode: "*"` writes `#*ₖ`. Justification says `column sum`. |
 | `serial` | a word line | `№` of that word, with positions as the parts. |
 | `reduce` | a single number line | The digit chain from that number, marked `#₁`, `#ₖ₁`, or `№₁` to match the line it reduced. `12670 ⟶ 16 ⟶ 7`. |
-| `cipher` | a word line | The permuted word. Atbash's justification includes the map, `atbash (i ↦ 37−i)`. |
+| `cipher` | a word line | The permuted word, with its letter list kept. Later lines score that list. Atbash's justification includes the map, `atbash (i ↦ 37−i)`. |
 | `acronym` | `text` | `↑⟨…⟩ = ⟨ՀԱՅԿ⟩`. |
 | `expand` | `text` and `lexicon` | `↓[dict:name]⟨word⟩ = ⟨phrase⟩`. Several phrases are joined with `·`. None is `∅` in Unicode and `{}` in ASCII. |
 | `anagram` | two texts | `∼` when the multisets match, `≁` otherwise. ASCII is `~` and `!~`. |

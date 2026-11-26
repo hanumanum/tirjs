@@ -11,6 +11,14 @@ export type Defined<T> = {
   readonly undefinedBy: readonly string[];
 };
 
+export type Spelling = {
+  readonly value: string | null;
+  readonly letters: readonly (readonly string[])[] | null;
+  readonly undefinedBy: readonly string[];
+};
+
+export type TextInput = string | Spelling;
+
 export type TextOptions = {
   readonly alphabet: Alphabet;
 };

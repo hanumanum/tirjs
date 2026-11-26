@@ -2,12 +2,13 @@ import {
   columnOf,
   type Defined,
   type NumericMode,
+  type TextInput,
   type TextOptions,
   type ValueOptions,
 } from "./alphabet.js";
 import { scoreText } from "./letters.js";
 
-export const columnSum = (text: string, options: ValueOptions): Defined<number> => {
+export const columnSum = (text: TextInput, options: ValueOptions): Defined<number> => {
   const scored = scoreText(text, options.alphabet, (letter) =>
     columnOf(letter, options.alphabet, options.mode),
   );
@@ -15,7 +16,7 @@ export const columnSum = (text: string, options: ValueOptions): Defined<number> 
 };
 
 export const columnSumAll = (
-  text: string,
+  text: TextInput,
   options: TextOptions,
 ): { readonly [Mode in NumericMode]: Defined<number> } => ({
   decompose: columnSum(text, { alphabet: options.alphabet, mode: "decompose" }),

@@ -4,16 +4,20 @@ import {
   letterAt,
   positionOf,
   type Alphabet,
-  type Defined,
+  type Spelling,
+  type TextInput,
   type TextOptions,
 } from "../alphabet.js";
-import { tokenize } from "../letters.js";
+import { read } from "../letters.js";
 
 export type NamedCipher = "atbash" | "albam" | "albam.pivot" | "albam.shift";
 
 export type Cipher = NamedCipher | { readonly shift: number };
 
 const mod = (value: number, size: number): number => ((value % size) + size) % size;
+
+const unique = (items: readonly string[]): readonly string[] =>
+  items.filter((item, index) => items.indexOf(item) === index);
 
 const isNamed = (cipher: Cipher): cipher is NamedCipher =>
   cipher === "atbash" ||
@@ -45,24 +49,33 @@ const destination = (cipher: Cipher, alphabet: Alphabet): ((position: number) =>
 };
 
 export const permute = (
-  text: string,
+  text: TextInput,
   cipher: Cipher,
   options: TextOptions,
-): Defined<string> => {
+): Spelling => {
   assertAlphabet(options.alphabet);
   const mapPosition = destination(cipher, options.alphabet);
-  const tokenized = tokenize(text, options.alphabet);
+  const tokenized = read(text, options.alphabet);
   if (tokenized.value === null) {
-    return { value: null, undefinedBy: tokenized.undefinedBy };
+    return { value: null, letters: null, undefinedBy: tokenized.undefinedBy };
   }
-  const words = tokenized.value.map((word) =>
-    word
-      .map((letter) => {
-        const position = positionOf(letter, options.alphabet);
-        if (position === null) return letter;
-        return letterAt(options.alphabet, mapPosition(position)) ?? letter;
-      })
-      .join(""),
+  const placed = tokenized.value.map((word) =>
+    word.map((letter) => {
+      const position = positionOf(letter, options.alphabet);
+      const mapped = position === null ? null : letterAt(options.alphabet, mapPosition(position));
+      return { letter, mapped };
+    }),
   );
-  return { value: words.join(" "), undefinedBy: [] };
+  const missing = unique(
+    placed.flat().flatMap((item) => (item.mapped === null ? [item.letter] : [])),
+  );
+  if (missing.length > 0) {
+    return { value: null, letters: null, undefinedBy: missing };
+  }
+  const words = placed.map((word) => word.map((item) => item.mapped ?? item.letter));
+  return {
+    value: words.map((word) => word.join("")).join(" "),
+    letters: words,
+    undefinedBy: [],
+  };
 };

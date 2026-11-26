@@ -1,4 +1,4 @@
-import { type Defined, type TextOptions, type ValueOptions } from "../alphabet.js";
+import { type Defined, type TextInput, type TextOptions, type ValueOptions } from "../alphabet.js";
 import { columnSum } from "../column.js";
 import { letters } from "../letters.js";
 import { serial } from "../serial.js";
@@ -20,8 +20,8 @@ const compare = (
 };
 
 export const isAnagram = (
-  left: string,
-  right: string,
+  left: TextInput,
+  right: TextInput,
   options: TextOptions,
 ): Defined<boolean> => {
   const a = letters(left, options);
@@ -33,19 +33,19 @@ export const isAnagram = (
 };
 
 export const sameValue = (
-  left: string,
-  right: string,
+  left: TextInput,
+  right: TextInput,
   options: ValueOptions,
 ): Defined<boolean> => compare(value(left, options), value(right, options));
 
 export const sameColumnSum = (
-  left: string,
-  right: string,
+  left: TextInput,
+  right: TextInput,
   options: ValueOptions,
 ): Defined<boolean> => compare(columnSum(left, options), columnSum(right, options));
 
 export const sameSerial = (
-  left: string,
-  right: string,
+  left: TextInput,
+  right: TextInput,
   options: TextOptions,
 ): Defined<boolean> => compare(serial(left, options), serial(right, options));

@@ -3,6 +3,8 @@ import {
   positionOf,
   type Alphabet,
   type Defined,
+  type Spelling,
+  type TextInput,
   type TextOptions,
 } from "./alphabet.js";
 
@@ -90,8 +92,23 @@ export const tokenize = (
   };
 };
 
-export const letters = (text: string, options: TextOptions): Defined<readonly string[]> => {
-  const tokenized = tokenize(text, options.alphabet);
+const isSpelling = (input: TextInput): input is Spelling => typeof input !== "string";
+
+export const read = (
+  input: TextInput,
+  alphabet: Alphabet,
+): Defined<readonly (readonly string[])[]> => {
+  if (isSpelling(input)) {
+    if (input.value === null || input.letters === null) {
+      return { value: null, undefinedBy: input.undefinedBy };
+    }
+    return { value: input.letters, undefinedBy: [] };
+  }
+  return tokenize(input, alphabet);
+};
+
+export const letters = (text: TextInput, options: TextOptions): Defined<readonly string[]> => {
+  const tokenized = read(text, options.alphabet);
   if (tokenized.value === null) {
     return { value: null, undefinedBy: tokenized.undefinedBy };
   }
@@ -99,11 +116,11 @@ export const letters = (text: string, options: TextOptions): Defined<readonly st
 };
 
 export const scoreText = (
-  text: string,
+  text: TextInput,
   alphabet: Alphabet,
   amountOf: (letter: string) => number | null,
 ): Breakdown => {
-  const tokenized = tokenize(text, alphabet);
+  const tokenized = read(text, alphabet);
   if (tokenized.value === null) {
     return { value: null, undefinedBy: tokenized.undefinedBy, parts: [] };
   }

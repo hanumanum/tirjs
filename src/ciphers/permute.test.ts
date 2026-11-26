@@ -1,14 +1,19 @@
 import { describe, expect, it } from "vitest";
+import { letters } from "../letters.js";
+import { serial } from "../serial.js";
+import { value } from "../value.js";
 import { permute } from "./permute.js";
 
 describe("permute", () => {
   it("applies Atbash within the alphabet", () => {
     expect(permute("Հայկ", "atbash", { alphabet: "G" })).toEqual({
       value: "ՅՔՀՆ",
+      letters: [["Յ", "Ք", "Հ", "Ն"]],
       undefinedBy: [],
     });
     expect(permute("հայկ", "atbash", { alphabet: "A" })).toEqual({
       value: "ՈՖՃՉ",
+      letters: [["Ո", "Ֆ", "Ճ", "Չ"]],
       undefinedBy: [],
     });
     expect(permute("Հուր", "atbash", { alphabet: "G" }).value).toBe("ՅԽԳԵ");
@@ -41,7 +46,30 @@ describe("permute", () => {
   it("is undefined when a letter is undefined", () => {
     expect(permute("Օ", "atbash", { alphabet: "G" })).toEqual({
       value: null,
+      letters: null,
       undefinedBy: ["Օ"],
+    });
+  });
+
+  it("keeps Ashkharabar cipher letters that the string would join", () => {
+    const image = permute("ՓԺ", "atbash", { alphabet: "A" });
+
+    expect(image).toEqual({
+      value: "ԵՎ",
+      letters: [["Ե", "Վ"]],
+      undefinedBy: [],
+    });
+    expect(letters(image, { alphabet: "A" })).toEqual({
+      value: ["Ե", "Վ"],
+      undefinedBy: [],
+    });
+    expect(serial(image, { alphabet: "A" })).toEqual({ value: 35, undefinedBy: [] });
+    expect(serial("ԵՎ", { alphabet: "A" })).toEqual({ value: 37, undefinedBy: [] });
+    expect(value(image, { alphabet: "A" })).toEqual({ value: 3005, undefinedBy: [] });
+    expect(permute(image, "atbash", { alphabet: "A" })).toEqual({
+      value: "ՓԺ",
+      letters: [["Փ", "Ժ"]],
+      undefinedBy: [],
     });
   });
 });

@@ -355,6 +355,8 @@ Call shapes, return values, and errors are specified in [the function reference]
 
 A result that can be ⊥ is `{ value, undefinedBy }`. `value` is `null` when the result is undefined, and `undefinedBy` names the letters that caused it. A defined result uses the same object: `value` holds the result and `undefinedBy` is empty. `reduce` returns a number.
 
+A cipher result also has `letters`, the words after the permutation. A later call may take that object and then uses `letters` instead of tokenizing `value`. Ashkharabar would otherwise read a cipher image `ԵՎ` as the one letter `և`.
+
 `derive` steps are plain objects. An `alphabet` step sets the alphabet for the following lines. Statement steps are `tokenize`, `value`, `column`, `serial`, `reduce`, `cipher`, `acronym`, `expand`, `anagram`, and `same`. `value` and `column` take `mode: "decompose" | "inherit" | "strict" | "*"`. The caller writes `format` as `"unicode"` or `"ascii"`.
 
 ---
@@ -374,3 +376,4 @@ A result that can be ⊥ is `{ value, undefinedBy }`. `value` is `null` when the
 | 9 | No lexicon in tirjs. Client code supplies it. |
 | 10 | ⊥ is `{ value: null, undefinedBy }`. A defined result is the same object with an empty `undefinedBy`. |
 | 11 | Ashkharabar albam is `albam.pivot` or `albam.shift`. On Grabar those names, and bare `albam`, are the half-swap. |
+| 12 | A cipher result carries `letters`. A later operation on that result uses the list, so `Ե` and `Վ` are not read back as `և`. |

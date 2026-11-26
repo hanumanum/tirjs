@@ -5,17 +5,19 @@ Four comparisons of two texts under one alphabet. Shared rules, including when a
 An anagram compares letters. A cipher permutes the alphabet. The two have different symbols, `∼` and `σ`.
 
 ```javascript
-import { isAnagram, sameColumnSum, sameSerial, sameValue } from "tirjs";
+import { isAnagram, permute, sameColumnSum, sameSerial, sameValue } from "tirjs";
 ```
 
 A true comparison returns `{ value: true, undefinedBy: [] }`. A false one returns `{ value: false, undefinedBy: [] }`. If either text is undefined, the relation is undefined: causes from the left text come first, then any new causes from the right.
+
+Either side may be a string or a `Spelling` from [`permute`](ciphers.md). A `Spelling` is compared by its `letters`.
 
 ## `isAnagram`
 
 ```typescript
 isAnagram(
-  left: string,
-  right: string,
+  left: string | Spelling,
+  right: string | Spelling,
   options: { alphabet: "G" | "A" },
 ): { readonly value: boolean | null; readonly undefinedBy: readonly string[] }
 ```
@@ -58,8 +60,8 @@ In Ashkharabar, `եւ` and `եվ` are both the letter `և`. In Grabar they are `
 
 ```typescript
 sameValue(
-  left: string,
-  right: string,
+  left: string | Spelling,
+  right: string | Spelling,
   options: { alphabet: "G" | "A"; mode?: "decompose" | "inherit" | "strict" },
 ): { readonly value: boolean | null; readonly undefinedBy: readonly string[] }
 ```
@@ -90,8 +92,8 @@ Two alphabets are compared by calling `value` once for each, or by a [`derive`](
 
 ```typescript
 sameColumnSum(
-  left: string,
-  right: string,
+  left: string | Spelling,
+  right: string | Spelling,
   options: { alphabet: "G" | "A"; mode?: "decompose" | "inherit" | "strict" },
 ): { readonly value: boolean | null; readonly undefinedBy: readonly string[] }
 ```
@@ -113,8 +115,8 @@ sameColumnSum("Հուր", "Հուր", { alphabet: "A" });
 
 ```typescript
 sameSerial(
-  left: string,
-  right: string,
+  left: string | Spelling,
+  right: string | Spelling,
   options: { alphabet: "G" | "A" },
 ): { readonly value: boolean | null; readonly undefinedBy: readonly string[] }
 ```
@@ -217,4 +219,19 @@ sameValue("Ր", "օր", { alphabet: "A", mode: "inherit" }).value;
 // ⟨Ր⟩ᴬ ≡#ˢ ⟨օր⟩ᴬ = ⊥(Օ)
 sameValue("Ր", "օր", { alphabet: "A", mode: "strict" });
 // { value: null, undefinedBy: ["Օ"] }
+```
+
+A cipher image is compared by the letters `permute` returned. Atbash of `ՓԺ` is `Ե` then `Վ`, serial 35. The string `ԵՎ` is the letter `և`, serial 37.
+
+```javascript
+// σ:atbash ⟨ՓԺ⟩ᴬ = ⟨ԵՎ⟩ᴬ    letters Ե·Վ
+const split = permute("ՓԺ", "atbash", { alphabet: "A" });
+
+// ⟨Ե·Վ⟩ᴬ ≢№ ⟨ԵՎ⟩ᴬ
+sameSerial(split, "ԵՎ", { alphabet: "A" }).value;
+// false
+
+// ⟨Ե·Վ⟩ᴬ ∼ ⟨ՎԵ⟩ᴬ
+isAnagram(split, "ՎԵ", { alphabet: "A" }).value;
+// true
 ```

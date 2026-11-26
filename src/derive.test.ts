@@ -121,6 +121,29 @@ describe("derive", () => {
     );
   });
 
+  it("does not re-read an Ashkharabar cipher image as a ligature", () => {
+    expect(
+      derive(
+        [
+          { op: "alphabet", alphabet: "A" },
+          { op: "tokenize", text: "ՓԺ" },
+          { op: "cipher", line: 1, cipher: "atbash" },
+          { op: "serial", line: 2 },
+          { op: "cipher", line: 2, cipher: "atbash" },
+        ],
+        { format: "unicode" },
+      ),
+    ).toBe(
+      [
+        "alphabet ᴬ",
+        "1. ⟨ՓԺ⟩ᴬ = Փ·Ժ    given; tokenize",
+        "2. σ:atbash ⟨ՓԺ⟩ᴬ = ⟨ԵՎ⟩ᴬ    atbash (i ↦ 40−i), 1",
+        "3. №⟨ԵՎ⟩ᴬ = 5+30 = 35    №, 2",
+        "4. σ:atbash ⟨ԵՎ⟩ᴬ = ⟨ՓԺ⟩ᴬ    atbash (i ↦ 40−i), 2",
+      ].join("\n"),
+    );
+  });
+
   it("requires an alphabet on the derivation", () => {
     expect(() => derive([{ op: "tokenize", text: "Հայկ" }], { format: "unicode" })).toThrow(
       /alphabet/,

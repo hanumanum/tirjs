@@ -1,6 +1,6 @@
 const assert = require("node:assert/strict");
 const { test } = require("node:test");
-const { columnSum, letters, map, ok, permute, pipe, reduce, valueAll } = require("tirjs");
+const { columnSum, letters, map, ok, permute, pipe, reduce, serial, valueAll } = require("tirjs");
 
 test("plain CommonJS JavaScript can evaluate TirN", () => {
   assert.deepEqual(letters("Հուր", { alphabet: "G" }), {
@@ -10,6 +10,10 @@ test("plain CommonJS JavaScript can evaluate TirN", () => {
   assert.equal(valueAll("Հուր", { alphabet: "A" }).decompose.value, 12670);
   assert.equal(reduce(valueAll("Հուր", { alphabet: "G" }).decompose.value), 7);
   assert.equal(permute("Հայկ", "atbash", { alphabet: "A" }).value, "ՈՖՃՉ");
+  const split = permute("ՓԺ", "atbash", { alphabet: "A" });
+  assert.deepEqual(split.letters, [["Ե", "Վ"]]);
+  assert.equal(serial(split, { alphabet: "A" }).value, 35);
+  assert.equal(permute(split, "atbash", { alphabet: "A" }).value, "ՓԺ");
   assert.equal(columnSum("Հայկ", { alphabet: "G" }).value, 17);
 });
 

@@ -1,4 +1,4 @@
-import { type Defined, type TextOptions } from "../alphabet.js";
+import { type Defined, type TextInput, type TextOptions } from "../alphabet.js";
 import { acronym } from "./acronym.js";
 import { letters } from "../letters.js";
 
@@ -8,7 +8,7 @@ export type Lexicon = {
 };
 
 export const expand = (
-  word: string,
+  word: TextInput,
   lexicon: Lexicon,
   options: TextOptions,
 ): Defined<readonly string[]> => {

@@ -6,6 +6,7 @@ import {
   positionOf,
   type Alphabet,
   type NumericMode,
+  type Spelling,
 } from "./alphabet.js";
 import { acronym } from "./acronyms/acronym.js";
 import { expand, type Lexicon } from "./acronyms/expand.js";
@@ -162,26 +163,27 @@ const requireWord = (line: Line, number: number): WordLine => {
   return line;
 };
 
+const spellingOf = (source: WordLine): Spelling => ({
+  value: source.words === null ? null : source.text,
+  letters: source.words,
+  undefinedBy: source.undefinedBy,
+});
+
 const score = (
-  text: string,
-  alphabet: Alphabet,
+  source: WordLine,
   basis: Basis,
   mode: NumericMode | undefined,
 ): Breakdown =>
-  scoreText(text, alphabet, (letter) => {
-    if (basis === "serial") return positionOf(letter, alphabet);
-    if (basis === "column") return columnOf(letter, alphabet, mode);
-    return numericOf(letter, alphabet, mode);
+  scoreText(spellingOf(source), source.alphabet, (letter) => {
+    if (basis === "serial") return positionOf(letter, source.alphabet);
+    if (basis === "column") return columnOf(letter, source.alphabet, mode);
+    return numericOf(letter, source.alphabet, mode);
   });
 
-const spreadOf = (
-  text: string,
-  alphabet: Alphabet,
-  basis: "value" | "column",
-): SpreadLine["modes"] => ({
-  decompose: score(text, alphabet, basis, "decompose"),
-  inherit: score(text, alphabet, basis, "inherit"),
-  strict: score(text, alphabet, basis, "strict"),
+const spreadOf = (source: WordLine, basis: "value" | "column"): SpreadLine["modes"] => ({
+  decompose: score(source, basis, "decompose"),
+  inherit: score(source, basis, "inherit"),
+  strict: score(source, basis, "strict"),
 });
 
 const showSpread = (modes: SpreadLine["modes"], format: DerivationFormat): string => {
@@ -268,7 +270,7 @@ const apply = (state: State, step: DerivationStep, format: DerivationFormat): St
       mode === "*" && basis === "value" ? "spread" : basis === "column" ? "column sum" : op;
     if (mode === "*") {
       if (basis === "serial") throw new Error("a serial value has no spread");
-      const modes = spreadOf(source.text, source.alphabet, basis);
+      const modes = spreadOf(source, basis);
       const line: SpreadLine = { kind: "spread", basis, text: source.text, alphabet: source.alphabet, modes };
       return push(
         line,
@@ -276,7 +278,7 @@ const apply = (state: State, step: DerivationStep, format: DerivationFormat): St
         `${because}, ${step.line}`,
       );
     }
-    const scored = score(source.text, source.alphabet, basis, mode);
+    const scored = score(source, basis, mode);
     const line: AmountLine = {
       kind: "amount",
       basis,
@@ -313,13 +315,12 @@ const apply = (state: State, step: DerivationStep, format: DerivationFormat): St
 
   if (step.op === "cipher") {
     const source = requireWord(at(state.lines, step.line), step.line);
-    const permuted = permute(source.text, step.cipher, { alphabet: source.alphabet });
-    const tokenized = permuted.value === null ? null : tokenize(permuted.value, source.alphabet);
+    const permuted = permute(spellingOf(source), step.cipher, { alphabet: source.alphabet });
     const line: WordLine = {
       kind: "word",
       text: permuted.value ?? source.text,
       alphabet: source.alphabet,
-      words: tokenized?.value ?? null,
+      words: permuted.letters,
       undefinedBy: permuted.undefinedBy,
     };
     const shown =

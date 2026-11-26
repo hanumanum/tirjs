@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import { permute } from "../ciphers/permute.js";
 import { isAnagram, sameColumnSum, sameSerial, sameValue } from "./relation.js";
 
 describe("isAnagram", () => {
@@ -36,6 +37,23 @@ describe("same value relations", () => {
     });
     expect(sameSerial("Հուր", "Հուր", { alphabet: "A" }).value).toBe(true);
     expect(sameSerial("Ա", "Բ", { alphabet: "G" }).value).toBe(false);
+  });
+
+  it("compares a cipher image by its letters", () => {
+    const image = permute("ՓԺ", "atbash", { alphabet: "A" });
+
+    expect(sameSerial(image, "ԵՎ", { alphabet: "A" })).toEqual({
+      value: false,
+      undefinedBy: [],
+    });
+    expect(isAnagram(image, "ՎԵ", { alphabet: "A" })).toEqual({
+      value: true,
+      undefinedBy: [],
+    });
+    expect(sameValue(image, "ԵՎ", { alphabet: "A", mode: "decompose" })).toEqual({
+      value: false,
+      undefinedBy: [],
+    });
   });
 
   it("names the letter that makes a strict comparison undefined", () => {
