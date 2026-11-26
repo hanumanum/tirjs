@@ -6,8 +6,20 @@ The [function reference](docs/api.md) specifies every TirN call. [Ciphers](docs/
 
 ## Install
 
+Version 1.0.0 is installed from GitHub. The client project needs Node 18 or newer.
+
 ```bash
-npm install tirjs
+npm install github:hanumanum/tirjs#v1.0.0
+```
+
+That install runs `prepare`, which builds `dist`. The repository does not contain those files.
+
+```javascript
+import { value } from "tirjs";
+```
+
+```javascript
+const { value } = require("tirjs");
 ```
 
 ## Values
@@ -129,7 +141,7 @@ npm test
 npm run check
 ```
 
-`npm test` runs one Vitest file per module in `src/`. `npm run check` also typechecks, builds ESM and CommonJS into `dist/`, and runs the plain JavaScript examples.
+`npm install` runs `prepare`, which builds `dist`. `npm test` runs one Vitest file per module in `src/`. `npm run check` also typechecks, builds ESM and CommonJS into `dist/`, and runs the plain JavaScript examples.
 
 Add behavior test-first. Write the module test beside the module, run `npm test` and see the new test fail, then add the module and export it from `src/index.ts`. Put functional helpers in `src/utils/fp/`. Each iteration ends with `npm test` passing, and with `README.md` plus the other docs updated to match the change.
 

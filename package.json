@@ -1,6 +1,6 @@
 {
   "name": "tirjs",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Functional TypeScript library for TirN, Armenian letter–number operations.",
   "type": "module",
   "main": "./dist/index.cjs",
@@ -24,6 +24,7 @@
     "dist"
   ],
   "scripts": {
+    "prepare": "npm run build",
     "build": "tsup",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
