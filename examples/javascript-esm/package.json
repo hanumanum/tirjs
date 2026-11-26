@@ -1,0 +1,8 @@
+{
+  "name": "tirjs-javascript-esm",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "tirjs": "file:../.."
+  }
+}

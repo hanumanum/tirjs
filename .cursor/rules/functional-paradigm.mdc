@@ -1,0 +1,37 @@
+---
+description: Functional style for tirjs library code
+alwaysApply: true
+---
+
+# Functional style
+
+tirjs is a functional TypeScript library.
+
+- Write pure functions. The same arguments always return the same result.
+- Pass data in and return new data. Leave arguments unchanged.
+- Model data as readonly objects, readonly arrays, and union types.
+- Prefer small functions composed with `pipe`.
+- Represent expected failure as a `Result`. Throw only for programmer errors.
+- Keep effects (I/O, clocks, randomness) outside core modules. Pass those values in as arguments.
+- Do not add classes, `this`, or shared mutable module state.
+
+```typescript
+export const rename = (user: User, name: string): User => ({
+  ...user,
+  name,
+});
+
+export const loadUser = (
+  users: readonly User[],
+  id: string,
+): Result<User, "missing"> => {
+  const user = users.find((candidate) => candidate.id === id);
+  return user === undefined ? err("missing") : ok(user);
+};
+```
+
+```typescript
+// Shared mutable updates do not belong in this library.
+user.name = name;
+items.push(item);
+```

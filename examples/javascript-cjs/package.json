@@ -1,0 +1,7 @@
+{
+  "name": "tirjs-javascript-cjs",
+  "private": true,
+  "dependencies": {
+    "tirjs": "file:../.."
+  }
+}

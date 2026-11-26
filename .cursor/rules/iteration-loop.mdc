@@ -1,0 +1,16 @@
+---
+description: After each iteration, run tests and update the docs
+alwaysApply: true
+---
+
+# Close every iteration
+
+End each iteration by running the tests and updating the docs in the same change.
+
+1. Run `npm test`.
+2. When a test fails, change the code or the test and run `npm test` again. Repeat until the suite passes.
+3. Run `npm run check` when the public build, package exports, or JavaScript examples changed.
+4. Update `README.md` and every other doc the iteration made stale. That includes public API samples, the develop workflow, and the JavaScript examples in `examples/`.
+5. Leave the iteration with a passing suite and docs that match the code.
+
+A new export, parameter, error value, or workflow step gets its doc edit in that same iteration.

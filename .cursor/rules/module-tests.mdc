@@ -1,0 +1,26 @@
+---
+description: Colocated module tests for every tirjs module
+alwaysApply: true
+---
+
+# Module tests
+
+Every module has its own test file.
+
+- Write `src/<module>.test.ts` before `src/<module>.ts`, in the same folder.
+- Import the module under test directly, for example `./result.js`.
+- Cover the public barrel separately in `src/index.test.ts`.
+- Assert explicit inputs and outputs. Pure functions do not need mocks.
+- When behavior is part of the JavaScript API, extend `examples/javascript-esm` and `examples/javascript-cjs` in the same iteration.
+- Close the iteration by running the tests and updating the docs.
+
+```typescript
+import { describe, expect, it } from "vitest";
+import { map, ok } from "./result.js";
+
+describe("map", () => {
+  it("applies the function to an ok value", () => {
+    expect(map(ok(2), (n) => n + 1)).toEqual(ok(3));
+  });
+});
+```

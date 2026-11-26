@@ -1,0 +1,27 @@
+---
+description: TypeScript source with a plain JavaScript public API
+alwaysApply: true
+---
+
+# TypeScript source, JavaScript clients
+
+The library is written in TypeScript and must run from plain JavaScript.
+
+- Implement library code in TypeScript under `src/`.
+- Export functions and plain data as named exports from `src/index.ts`.
+- Callers must be able to build arguments with objects, arrays, strings, numbers, booleans, and functions.
+- Use string unions. Do not add `enum` or `namespace`.
+- A JavaScript caller must not need a class instance or a TypeScript-only wrapper to use the API.
+- Build ESM (`dist/index.js`) and CommonJS (`dist/index.cjs`), and ship declaration files.
+- Keep the `package.json` `exports` map pointed at those build artifacts.
+- When the public API changes, update the JavaScript examples under `examples/`.
+
+```javascript
+import { ok, map } from "tirjs";
+
+const result = map(ok(2), (n) => n + 1);
+```
+
+```javascript
+const { ok, map } = require("tirjs");
+```

@@ -1,0 +1,28 @@
+---
+description: Write failing module tests before implementation
+alwaysApply: true
+---
+
+# Test-driven development
+
+Write the test before the implementation.
+
+1. Add or extend `src/<module>.test.ts` with the next behavior.
+2. Run `npm test` and confirm the new test fails because that behavior is missing.
+3. Write the smallest pure function that makes the test pass.
+4. Run `npm test` again and keep the change when the suite passes.
+
+Change production code in `src/` to satisfy a failing test. When a test is wrong, correct the test, confirm it fails for the expected reason, then update the implementation.
+
+```typescript
+// First, in src/clamp.test.ts
+it("clamps a value to a range", () => {
+  expect(clamp(12, { min: 0, max: 10 })).toBe(10);
+});
+
+// Then, in src/clamp.ts
+export const clamp = (
+  value: number,
+  range: { readonly min: number; readonly max: number },
+): number => Math.min(range.max, Math.max(range.min, value));
+```
