@@ -332,6 +332,8 @@ rel        = "=" | "∼" | "≡#" [ mode ] [ reduction ] | "≡№" [ "₁" ] ;
 
 ## 10. `tirjs` API mapping
 
+Call shapes, return values, and errors are specified in [the function reference](api.md). [Ciphers](ciphers.md), [acronyms](acronyms.md), and [relations](relations.md) each have their own page, with the TirN line written above the call.
+
 | TirN | `tirjs` |
 |---|---|
 | `⟨w⟩ᴬ` tokenize | `letters(w, { alphabet: "A" })` |

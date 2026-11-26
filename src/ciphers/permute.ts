@@ -6,8 +6,8 @@ import {
   type Alphabet,
   type Defined,
   type TextOptions,
-} from "./alphabet.js";
-import { tokenize } from "./letters.js";
+} from "../alphabet.js";
+import { tokenize } from "../letters.js";
 
 export type NamedCipher = "atbash" | "albam" | "albam.pivot" | "albam.shift";
 

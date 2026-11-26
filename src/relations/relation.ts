@@ -1,8 +1,8 @@
-import { type Defined, type TextOptions, type ValueOptions } from "./alphabet.js";
-import { columnSum } from "./column.js";
-import { letters } from "./letters.js";
-import { serial } from "./serial.js";
-import { value } from "./value.js";
+import { type Defined, type TextOptions, type ValueOptions } from "../alphabet.js";
+import { columnSum } from "../column.js";
+import { letters } from "../letters.js";
+import { serial } from "../serial.js";
+import { value } from "../value.js";
 
 const unique = (items: readonly string[]): readonly string[] =>
   items.filter((item, index) => items.indexOf(item) === index);

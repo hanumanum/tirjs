@@ -1,5 +1,5 @@
-import { type Defined, type TextOptions } from "./alphabet.js";
-import { tokenize } from "./letters.js";
+import { type Defined, type TextOptions } from "../alphabet.js";
+import { tokenize } from "../letters.js";
 
 export const acronym = (text: string, options: TextOptions): Defined<string> => {
   const tokenized = tokenize(text, options.alphabet);

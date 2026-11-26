@@ -1,6 +1,6 @@
-import { type Defined, type TextOptions } from "./alphabet.js";
+import { type Defined, type TextOptions } from "../alphabet.js";
 import { acronym } from "./acronym.js";
-import { letters } from "./letters.js";
+import { letters } from "../letters.js";
 
 export type Lexicon = {
   readonly name: string;

@@ -7,10 +7,10 @@ import {
   type Alphabet,
   type NumericMode,
 } from "./alphabet.js";
-import { acronym } from "./acronym.js";
-import { expand, type Lexicon } from "./expand.js";
+import { acronym } from "./acronyms/acronym.js";
+import { expand, type Lexicon } from "./acronyms/expand.js";
 import { scoreText, tokenize, type Breakdown } from "./letters.js";
-import { permute, type Cipher } from "./permute.js";
+import { permute, type Cipher } from "./ciphers/permute.js";
 import { reduceTrace } from "./reduce.js";
 
 export type DerivationFormat = "unicode" | "ascii";

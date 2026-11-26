@@ -2,6 +2,8 @@
 
 Functional library for [TirN](docs/TIRN.md), a notation for Armenian letter–number operations. The alphabet is always Grabar (`"G"`, 36 letters) or Ashkharabar (`"A"`, 39 letters). Plain JavaScript can call it with `import` or `require`.
 
+The [function reference](docs/api.md) specifies every TirN call. [Ciphers](docs/ciphers.md), [acronyms](docs/acronyms.md), and [relations](docs/relations.md) continue it, with a TirN line above each example. The short samples below are the ones used most often.
+
 ## Install
 
 ```bash
@@ -15,24 +17,30 @@ A result that can be undefined is `{ value, undefinedBy }`. `undefinedBy` names 
 ```javascript
 import { columnSum, letters, reduce, serial, value, valueAll } from "tirjs";
 
+// ⟨Հուր⟩ᴳ = Հ·Ո·Ւ·Ր
 letters("Հուր", { alphabet: "G" });
 // { value: ["Հ", "Ո", "Ւ", "Ր"], undefinedBy: [] }
 
+// #⟨Հայկ⟩ᴳ = 431
 value("Հայկ", { alphabet: "G" });
 // { value: 431, undefinedBy: [] }
 
+// #₁⟨Հայկ⟩ᴳ = 8
 reduce(431);
 // 8
 
+// №⟨Հուր⟩ᴬ = 82
 serial("Հուր", { alphabet: "A" });
 // { value: 82, undefinedBy: [] }
 
+// #ᵈ⟨Հուր⟩ᴬ = 12670
 value("Հուր", { alphabet: "A", mode: "decompose" });
 // { value: 12670, undefinedBy: [] }
 
+// #*⟨Հուր⟩ᴬ = { ᵈ 12670 · ⁱ 12070 · ˢ ⊥(Ու) }
 valueAll("Հուր", { alphabet: "A" });
-// decompose 12670, inherit 12070, strict undefined by Ու
 
+// #ₖ⟨Հայկ⟩ᴳ = 17
 columnSum("Հայկ", { alphabet: "G" });
 // { value: 17, undefinedBy: [] }
 ```
@@ -44,27 +52,32 @@ columnSum("Հայկ", { alphabet: "G" });
 ```javascript
 import { acronym, expand, isAnagram, permute } from "tirjs";
 
+// σ:atbash ⟨Հայկ⟩ᴳ = ⟨ՅՔՀՆ⟩ᴳ
 permute("Հայկ", "atbash", { alphabet: "G" });
 // { value: "ՅՔՀՆ", undefinedBy: [] }
 
+// σ:+1 ⟨Ա⟩ᴳ = ⟨Բ⟩ᴳ
 permute("Ա", { shift: 1 }, { alphabet: "G" });
 // { value: "Բ", undefinedBy: [] }
 
+// ↑⟨Ուրախ օր⟩ᴬ = ⟨ՈւՕ⟩ᴬ
 acronym("Ուրախ օր", { alphabet: "A" });
 // { value: "ՈւՕ", undefinedBy: [] }
 
+// ↓[dict:sample]⟨ՀԱՅԿ⟩ᴬ = ⟨Հայոց Այբուբեն Յուրահատուկ Կերտված⟩ᴬ
 expand("ՀԱՅԿ", {
   name: "sample",
   phrases: ["Հայոց Այբուբեն Յուրահատուկ Կերտված"],
 }, { alphabet: "A" });
 
+// ⟨եւ⟩ᴬ ∼ ⟨եվ⟩ᴬ
 isAnagram("եւ", "եվ", { alphabet: "A" });
 // { value: true, undefinedBy: [] }
 ```
 
 `permute` also takes `"albam.pivot"` and `"albam.shift"`. On Grabar, `"albam"` is the same half-swap. Ashkharabar albam takes one of the two variants. `expand` searches a lexicon the caller supplies. tirjs ships none.
 
-`sameValue`, `sameColumnSum`, and `sameSerial` compare two texts under one alphabet.
+`sameValue`, `sameColumnSum`, and `sameSerial` compare two texts under one alphabet: `≡#`, `≡#ₖ`, and `≡№`.
 
 ## Derivations
 
@@ -124,10 +137,17 @@ Add behavior test-first. Write the module test beside the module, run `npm test`
 
 ```
 src/index.ts         Public exports
+src/ciphers/         Alphabet permutations (atbash, shift, albam)
+src/acronyms/        Acronym and lexicon expansion
+src/relations/       Anagram and equal-value comparisons
 src/utils/fp/        Functional helpers (pipe, result) and their module tests
 knowledge/           Letter tables, one JSON file per table
 examples/            Plain JavaScript clients
 docs/TIRN.md         TirN notation
+docs/api.md          Letters, values, reduction, derivations
+docs/ciphers.md      permute
+docs/acronyms.md     acronym and expand
+docs/relations.md    anagram and equal-value comparisons
 dist/                ESM, CommonJS, and .d.ts (build output)
 .cursor/rules/       Project rules: functional style, JavaScript clients, module tests, test-first work, and the iteration close
 ```
